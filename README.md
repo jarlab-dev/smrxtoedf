@@ -6,7 +6,8 @@ Build & Run:
 - Compile using Visual Studio 2017 provided project
 - Run in command line from the runtime folder (thats where the dlls are 
 located to avoid any additional setup in local host)
-- example :  runtime> .\smrxtoedf.exe .\input.smrx .\output.edf
+- example :  $local_path\smrxtoedf\runtime> .\smrxtoedf.exe .\input.smrx .\output.edf
+
 Current status: 
 - loading properly smrx files 
 
