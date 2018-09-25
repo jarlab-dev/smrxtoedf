@@ -3,7 +3,7 @@
 Basic utility to convert smrx files to edf+. 
 
 Build & Run:
-- Compile using Visual Studio provided project
+- Compile using Visual Studio 2017 provided project
 - Run in command line from the runtime folder (thats where the dlls are 
 located to avoid any additional setup in local host)
 
