@@ -26,6 +26,7 @@ int main(int argc, char* argv[])
 	}
 	fclose(file);
 
+	//TODO add handler to avoind overwriting wrong file
 	int convert = smrx2edf(fin_name, fout_name);
 	return convert;
 }
