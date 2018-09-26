@@ -10,9 +10,9 @@ located to avoid any additional setup in local host)
 
 Current status: 
 - loading properly smrx files 
+- writing out edf+ files
 
-TODO: 
-- complete edf file output
-- refactor code to present as c library to be used in third party 
-project intead of stand alone program
+TODO:
+- test with further inputs
+- review physical vs digital data in edf+ (by using S64ReadSh and writing digital data, we might save space and avoid rounding errors)
 
