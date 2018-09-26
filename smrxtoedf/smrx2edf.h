@@ -310,7 +310,7 @@ int smrx2edf(char * fin_name, char* fout_name) {
 	//TODO: free buffers
 
 	printf(" ## edf generated successfully\n");
-
+	/*
 	
 	//debugging code for testing generateng output
 	struct edf_hdr_struct hdr;
@@ -376,7 +376,7 @@ int smrx2edf(char * fin_name, char* fout_name) {
 	for (int i = 0; i < real_sps * 10; i++) {
 		fprintf(filePtr2, "%d   %.5g \n", i, buftest[i]);
 	}
-	
+	*/
 	
 	return 0;
 }
