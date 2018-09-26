@@ -8,6 +8,8 @@
 
 #include "windows.h"
 #include "math.h"
+#include "string.h"
+
 
 // ----------------------------------------------------------------------------
 //definition to access the CEDS64INT dll.
@@ -152,8 +154,10 @@ int smrx2edf(char * fin_name, char* fout_name) {
 		int type = S64ChanType(smrx_fhandle, i+1);
 		
 		int title_l = S64GetChanTitle(smrx_fhandle, i+1, &ch_labels[i], -1);
-		ch_labels[i] = (char*) malloc(title_l + 1);
-		int aux = S64GetChanTitle(smrx_fhandle, i+1, &ch_labels[i], title_l);
+		ch_labels[i] = (char*) malloc(sizeof(char) * (title_l + 1));
+		int aux = S64GetChanTitle(smrx_fhandle, i+1, ch_labels[i], title_l);
+		//char*p=ch_labels[i];
+		//p[title_l] = 0; 
 
 		char * buff2 = NULL;
 		int comment_l = S64GetChanComment(smrx_fhandle, i+1, buff2, -1);
@@ -168,7 +172,7 @@ int smrx2edf(char * fin_name, char* fout_name) {
 			return -1;
 		}
 
-		printf("  channel[%d]: {type=%d, max_tics=%lld, div=%d name=%s ,comment:%s}\n", i, type, ch_maxtime[i], ch_div, &ch_labels[i], buff2);
+		printf("  channel[%d]: {type=%d, max_tics=%lld, div=%d name=%s ,name_l:%d}\n", i, type, ch_maxtime[i], ch_div, ch_labels[i], title_l);
 		
 		free(buff2);
 	}
@@ -251,6 +255,8 @@ int smrx2edf(char * fin_name, char* fout_name) {
 		printf("error: edfopen_file_writeonly()\n");
 		return(1);
 	}
+	
+	char *label = (char*)malloc(17);
 
 	for (int i = 0; i < smrx_nchannels; i++) {
 
@@ -265,8 +271,9 @@ int smrx2edf(char * fin_name, char* fout_name) {
 			printf("error: edf_set_digital_maximum()\n");
 		if (edf_set_digital_minimum(edf_handle, i, -32767))
 			printf("error: edf_set_digital_minimum()\n");
-
-		if (edf_set_label(edf_handle, i, &ch_labels[i]))
+		
+		//TODO: guard for label length
+		if (edf_set_label(edf_handle, i, (const char *) ch_labels[i]))
 			printf("error: edf_set_label()\n");
 
 	}
@@ -304,12 +311,12 @@ int smrx2edf(char * fin_name, char* fout_name) {
 
 	printf(" ## edf generated successfully\n");
 
-	/*
+	
 	//debugging code for testing generateng output
 	struct edf_hdr_struct hdr;
 	int edf_handle2 = edfopen_file_readonly(fout_name, &hdr, EDFLIB_DO_NOT_READ_ANNOTATIONS); 
 
-	int channel = 22;
+	int channel = 10;
 	int x = 0; // start reading x seconds from start of file 
 
 	int  hdl = hdr.handle;
@@ -370,6 +377,6 @@ int smrx2edf(char * fin_name, char* fout_name) {
 		fprintf(filePtr2, "%d   %.5g \n", i, buftest[i]);
 	}
 	
-	*/
+	
 	return 0;
 }
